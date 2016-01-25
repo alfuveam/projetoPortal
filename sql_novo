@@ -1,0 +1,23 @@
+create table aluno (cod_aluno int, cpf varchar(20), rg varchar(20), data_nascimento date, nome varchar(100), telefone varchar(100), primary key(cod_aluno));
+
+postgres=# create table curso (
+nome varchar(100),
+valor_inscricao real,
+periodo int,
+cod_curso int, primary key (cod_curso));
+
+create table matricula (cod_matricula int, cod_aluno int, cod_curso int, data_matricula date, ano int, ativo int, pago int, primary key(cod_matricula));
+
+alter table matricula add foreign key (cod_aluno) references aluno (cod_aluno);
+
+alter table curso add foreign key (cod_curso) references curso (cod_curso);
+
+create table funcionario (cod_funcionario int, senha varchar(50), login varchar(50), primary key(cod_funcionario));
+
+insert into funcionario (cod_funcionario, senha, login) values (1, '123', '123');
+
+postgres=# alter table funcionario add column nome varchar(100);
+
+postgres=# update funcionario set nome = 'Felipe' where cod_funcionario = 1;
+
+
