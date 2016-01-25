@@ -70,10 +70,9 @@ class DaoALuno implements IDaoAluno {
         } else {
             $cod_aluno = $this->generateID();
             $u->setCod_aluno($cod_aluno);
-            echo "EOQ" . $cod_aluno;
-            die;
             $sql = "insert into aluno (cod_aluno, cpf, rg, data_nascimento, nome, telefone) values (:cod_aluno, :cpf, :rg, :data_nascimento, :nome, :telefone)";
         }
+
         $cnx = Conexao::getConexao();
         $sth = $cnx->prepare($sql);
         $sth->bindParam("cod_aluno", $cod_aluno);
@@ -107,4 +106,3 @@ class DaoALuno implements IDaoAluno {
         $id = $res[0];
         return $id;
     }
-}
