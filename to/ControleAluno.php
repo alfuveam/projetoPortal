@@ -43,6 +43,11 @@ class ControleAluno implements IPrivateTO{
             throw new Exception("O campo cpf è Obrigatorio!");
         }
 
+        $rg = isset($_POST['rg']) ? $_POST['rg'] : FALSE;
+        $data_nascimento = isset($_POST['data_nascimento']) ? $_POST['data_nascimento'] : FALSE;
+        $nome = isset($_POST['nome']) ? $_POST['nome'] : FALSE;
+        $telefone = isset($_POST['telefone']) ? $_POST['telefone'] : FALSE;
+
         $u->setCpf($cpf);
         $u->setRg($rg);
         $u->setData_nascimento($data_nascimento);
@@ -87,3 +92,4 @@ class ControleAluno implements IPrivateTO{
         }
     }
 }
+?>

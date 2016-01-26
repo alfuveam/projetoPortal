@@ -16,8 +16,11 @@ create table funcionario (cod_funcionario int, senha varchar(50), login varchar(
 
 insert into funcionario (cod_funcionario, senha, login) values (1, '123', '123');
 
-postgres=# alter table funcionario add column nome varchar(100);
+alter table funcionario add column nome varchar(100);
 
-postgres=# update funcionario set nome = 'Felipe' where cod_funcionario = 1;
+update funcionario set nome = 'Felipe' where cod_funcionario = 1;
+
+alter table aluno add constraint cpf unique (cpf);
+
 
 

@@ -3,7 +3,7 @@
             <div class="starter-template">
                 <a class="btn btn-danger" href="<?php echo URL; ?>login/logout">
                   <i class="glyphicon glyphicon-remove"></i>Logout</a>
-                <a class="btn btn-primary"href="<?php echo URL; ?>controle-aluno/novo"> Novo Aluno</a>
+                <a class="btn btn-primary"href="<?php echo URL; ?>controle-curso/novo"> Novo Curso</a>
 
                 <table class="table table-bordered">
                     <thead>
@@ -16,16 +16,16 @@
 
                         <?php
 
-                        if ($this->getDados('alunos')) {
-                            $ar = $this->getDados('alunos');
-                            foreach ($ar as $aluno) {
-                                $aluno instanceof Aluno;
-                                echo "<tr><td>{$aluno->getCod_aluno()}</td>";
-                                echo "<td>{$aluno->getNome()}</td>";
+                        if ($this->getDados('cursos')) {
+                            $ar = $this->getDados('cursos');
+                            foreach ($ar as $curso) {
+                                $curso instanceof Curso;
+                                echo "<tr><td>{$curso->getCod_curso()}</td>";
+                                echo "<td>{$curso->getNome()}</td>";
 
                                 echo "<td>"
-                                . "<a class=\" btn btn-default\" href=\"" . URL . "controle-aluno/excluir/{$aluno->getCod_aluno()}\">Excluir Aluno</a>"
-                                . "  |  <a class=\" btn btn-default\" href=\"" . URL . "controle-aluno/editar/{$aluno->getCod_aluno()}\">Editar Aluno</a>"
+                                . "<a class=\" btn btn-default\" href=\"" . URL . "controle-curso/excluir/{$curso->getCod_curso()}\">Excluir Curso</a>"
+                                . "  |  <a class=\" btn btn-default\" href=\"" . URL . "controle-curso/editar/{$curso->getCod_curso()}\">Editar Curso</a>"
                                 . "</td></tr>";
                             }
                         }

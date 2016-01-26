@@ -57,18 +57,17 @@ class DaoFuncionario implements IDaoFuncionario {
     }
 
     public function salvar(\Funcionario $u) {
-        $id = null;
         $nome = $u->getNome();
         $login = $u->getLogin();
         $senha = $u->getSenha();
 
         if ($u->getCod_funcionario()) {
             $id = $u->getCod_funcionario();
-            $sql = "update funcionario set senha=:senha, login=:login where cod_funcionario=:id";
+            $sql = "update funcionario set nome=:nome, senha=:senha, login=:login where cod_funcionario=:id";
         } else {
             $id = $this->generateID();
             $u->setCod_funcionario($id);
-            $sql = "insert into funcionario (cod_funcionario, login, senha) values (:id, :login, :senha)";
+            $sql = "insert into funcionario (cod_funcionario, nome, login, senha) values (:id, :nome, :login, :senha)";
         }
         $cnx = Conexao::getConexao();
         $sth = $cnx->prepare($sql);
@@ -79,7 +78,6 @@ class DaoFuncionario implements IDaoFuncionario {
 
         try {
             $sth->execute();
-
             return $u;
         } catch (Exception $exc) {
             echo $exc->getMessage();
@@ -87,7 +85,7 @@ class DaoFuncionario implements IDaoFuncionario {
     }
 
     private function generateID() {
-        $sql = "select (coalesce(max(id),0)+1) as ID from funcionario";
+        $sql = "select (coalesce(max(cod_funcionario),0)+1) as ID from funcionario";
         $cnx = Conexao::getConexao();
         $sth = $cnx->prepare($sql);
 

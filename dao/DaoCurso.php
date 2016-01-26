@@ -1,12 +1,12 @@
 <?php
 
-class DaoALuno implements IDaoAluno {
+class DaoCurso implements IDaoCurso {
 
-    public function excluir(\Aluno $u) {
-        $sql = "delete FROM aluno where cod_aluno=:ID";
+    public function excluir(\Curso $u) {
+        $sql = "delete FROM curso where cod_curso=:ID";
         $conexao = Conexao::getConexao();
         $sth = $conexao->prepare($sql);
-        $p1 = $u->getCod_aluno();
+        $p1 = $u->getCod_curso();
         $sth->bindParam("ID", $p1);
 
         try {
@@ -15,12 +15,12 @@ class DaoALuno implements IDaoAluno {
         } catch (Exception $exc) {
             return $exc->getMessage();
         }
-        $usu = $sth->fetchObject(get_class(Aluno));
+        $usu = $sth->fetchObject(get_class(Curso));
         return $usu;
     }
 
     public function listar($p1) {
-        $sql = "SELECT cod_aluno, cpf, rg, data_nascimento, nome, telefone FROM aluno where cod_aluno=:ID";
+        $sql = "SELECT cod_curso, nome, valor_inscricao, periodo FROM curso where cod_curso=:ID";
         $conexao = Conexao::getConexao();
         $sth = $conexao->prepare($sql);
         $sth->bindParam("ID", $p1);
@@ -30,14 +30,12 @@ class DaoALuno implements IDaoAluno {
         } catch (Exception $exc) {
             echo $exc->getMessage();
         }
-
-        $usu = $sth->fetchObject("Aluno");
-
+        $usu = $sth->fetchObject("Curso");
         return $usu;
     }
 
     public function listarTodos() {
-        $sql = "SELECT cod_aluno, cpf, rg, data_nascimento, nome, telefone from aluno";
+        $sql = "SELECT cod_curso, nome, valor_inscricao, periodo from curso";
         $conexao = Conexao::getConexao();
         $sth = $conexao->prepare($sql);
 
@@ -47,50 +45,47 @@ class DaoALuno implements IDaoAluno {
             echo $exc->getMessage();
         }
 
-        $arAluno = array();
+        $arCurso = array();
 
-        while ($aluno = $sth->fetchObject("Aluno")) {
-            $arAluno[] = $aluno;
+        while ($curso = $sth->fetchObject("Curso")) {
+            $arCurso[] = $curso;
         }
 
-        return $arAluno;
+        return $arCurso;
     }
 
-    public function salvar(\Aluno $u) {
-        $cpf = $u->getCpf();
-        $rg = $u->getRg();
-        $data_nascimento = $u->getData_nascimento();
-        $nome = $u->getNome();
-        $telefone = $u->getTelefone();
+    public function salvar(\Curso $c) {
+        $cod_curso = $c->getCod_curso();
+        $nome = $c->getNome();
+        $valor_inscricao = $c->getValor_incricao();
+        $periodo = $c->getPeriodo();
 
-        if ($u->getCod_aluno()) {
-            $id = $u->getCod_aluno();
-            $sql = "update aluno set cpf=:cpf, rg=:rg, data_nascimento=:data_nascimento, nome=:nome, telefone=:telefone where cod_aluno = :id";
+        if ($c->getCod_curso()) {
+            $id = $c->getCod_curso();
+            $sql = "update curso set nome=:nome, valor_inscricao=:valor_inscricao, periodo=:periodo where cod_curso = :id";
         } else {
             $id = $this->generateID();
-            $u->setCod_aluno($id);
-            $sql = "insert into aluno (cod_aluno, cpf, rg, data_nascimento, nome, telefone) values (:id, :cpf, :rg, :data_nascimento, :nome, :telefone)";
+            $c->setCod_curso($id);
+            $sql = "insert into curso (cod_curso, nome, valor_inscricao, periodo) values (:id, :nome, :valor_inscricao, :periodo)";
         }
 
         $cnx = Conexao::getConexao();
         $sth = $cnx->prepare($sql);
         $sth->bindParam("id", $id);
-        $sth->bindParam("cpf", $cpf);
-        $sth->bindParam("rg", $rg);
-        $sth->bindParam("data_nascimento", $data_nascimento);
         $sth->bindParam("nome", $nome);
-        $sth->bindParam("telefone", $telefone);
+        $sth->bindParam("valor_inscricao", $valor_inscricao);
+        $sth->bindParam("periodo", $periodo);
 
         try {
             $sth->execute();
-            return $u;
+            return $c;
         } catch (Exception $exc) {
             echo $exc->getMessage();
         }
     }
 
     private function generateID() {
-        $sql = "select (coalesce(max(cod_aluno),0)+1) as ID from aluno";
+        $sql = "select (coalesce(max(cod_curso),0)+1) as ID from curso";
         $cnx = Conexao::getConexao();
         $sth = $cnx->prepare($sql);
 

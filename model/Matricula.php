@@ -5,7 +5,7 @@
   class Matricula
   {
 
-    function __construct(argument)
+    function __construct()
     {
 
     }

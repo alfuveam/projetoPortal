@@ -7,10 +7,9 @@
   $nome = "";
   $telefone = "";
 
-
   $aluno = $this->getDados("aluno");
   if ($aluno) {
-      $aluno instanceof aluno;
+        $aluno instanceof aluno;
         $cod_aluno = $aluno->getCod_aluno();
         $cpf = $aluno->getCpf();
         $rg = $aluno->getRg();
@@ -30,8 +29,19 @@
       <label>Rg</label><br>
       <input type="text" value="<?php echo $rg ?>" name="rg"><br>
 
-      <label>Data Nascimento</label><br>
-      <input type="text" value="<?php echo $data_nascimento ?>" name="data_nascimento"><br>
+      <label>Data Nascimento yyyy/mm/dd</label><br>
+      <input type="text" value="<?php echo $data_nascimento ?>" id="data_nascimento" name="data_nascimento"><br>
+
+        <script type="text/javascript">
+          function verifica(){
+            var iTamanhoData = document.getElementById('data_nascimento').value;
+            var iAno = iTamanhoData.substring(0, 4);
+              if((iAno % 4 == 0) && (iAno % 100 != 0 || iAno % 400 == 0)){
+                alert("Ano bissexto e a pagina esta sendo salva!");
+              }
+
+          }
+        </script>
 
       <label>Nome</label><br>
       <input type="text" value="<?php echo $nome ?>" name="nome"><br>
@@ -39,8 +49,7 @@
       <label>Telefone</label><br>
       <input type="text" value="<?php echo $telefone ?>" name="telefone"><br>
 
-      <input class="btn btn-primary" type="submit" value="Salvar">
+      <input class="btn btn-primary" type="submit" value="Salvar" onclick="verifica()">
       <a class="btn btn-primary" href="<?php echo URL; ?>pagina-inicial">Voltar</a><br>
-      </div>
   </form>
 </div>
